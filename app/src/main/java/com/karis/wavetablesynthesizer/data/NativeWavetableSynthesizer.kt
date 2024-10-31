@@ -7,6 +7,7 @@ import com.karis.wavetablesynthesizer.domain.WaveTable
 import com.karis.wavetablesynthesizer.domain.WavetableSynthesizer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class NativeWavetableSynthesizer @Inject constructor() : WavetableSynthesizer, DefaultLifecycleObserver {
@@ -25,7 +26,7 @@ class NativeWavetableSynthesizer @Inject constructor() : WavetableSynthesizer, D
         super.onResume(owner)
 
         synchronized(synthesizerMutex) {
-            Log.d("NativeWavetableSynthesizer", "onResume() called")
+            Timber.d("onResume() called")
             createNativeHandleIfNotExists()
         }
     }
@@ -34,10 +35,10 @@ class NativeWavetableSynthesizer @Inject constructor() : WavetableSynthesizer, D
         super.onPause(owner)
 
         synchronized(synthesizerMutex) {
-            Log.d("NativeWavetableSynthesizer", "onPause() called")
+            Timber.tag("NativeWavetableSynthesizer").d("onPause() called")
 
             if (synthesizerHandle == 0L) {
-                Log.e("NativeWavetableSynthesizer", "Attempting to destroy a null synthesizer.")
+                Timber.e("Attempting to destroy a null synthesizer.")
                 return
             }
 

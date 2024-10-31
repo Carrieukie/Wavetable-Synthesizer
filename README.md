@@ -21,6 +21,11 @@ This app draws inspiration from [this tutorial](https://thewolfsound.com/android
 
 Here is a screenshot of the app:
 
-<img src="screenshot/screenshot.png" alt="Screenshot" width="300"/>
+<img src="assets/screenshot.png" alt="Screenshot" width="300"/>
 
 **Architecture**
+
+The app architecture combines Model-View-Intent (MVI) with hexagonal (ports and adapters) architecture, promoting separation of concerns and modularity, ensuring clear boundaries between the UI, business logic, and platform-specific components.
+
+<img src="assets/architecture.png" alt="Screenshot" />
+
