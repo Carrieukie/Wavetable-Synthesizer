@@ -5,7 +5,6 @@
 
 Wavetable Synthesizer is an Android app created as a journey to overcome my own fears of C++. This project combines Kotlin, Jetpack Compose, and C++ through the Java Native Interface (JNI) to explore real-time audio processing in a mobile environment. By diving into C++ and native Android development, I’m facing challenges head-on, learning, and building something unique.
 
-Inspired by [this tutorial](https://thewolfsound.com/android-synthesizer-1-app-architecture/) on Android synthesizer app architecture, this project follows a guided approach for its initial structure and design.
 
 ### Screenshots
 
