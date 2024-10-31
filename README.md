@@ -8,14 +8,19 @@ This app draws inspiration from [this tutorial](https://thewolfsound.com/android
 
 **Features**:
 
--   Customizable wavetable creation
--   Real-time sound processing
--   Built-in effects to manipulate audio
--   Clean UI with Jetpack Compose
+-   **Customizable wavetable creation** – Craft sounds using sine, triangle, square, and sawtooth waveforms. Each waveform offers unique characteristics:
+    -   **Sine** offers a pure, single-frequency tone..
+    -   **Triangle** has a softer, rounded sound with odd harmonics.
+    -   **Square** delivers a bold, buzzy sound due to strong odd harmonics.
+    -   **Sawtooth** produces a rich, full sound because it contains all harmonics.
+-   **Real-time sound processing**
+-   **Built-in effects to manipulate audio**
+-   **Clean UI with Jetpack Compose**
 
 ## Screenshots
 
 Here is a screenshot of the app:
 
 <img src="screenshot/screenshot.png" alt="Screenshot" width="300"/>
-**Architecture**:
+
+**Architecture**
