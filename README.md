@@ -7,21 +7,10 @@ Wavetable Synthesizer is an Android app created as a journey to overcome my own 
 
 Inspired by [this tutorial](https://thewolfsound.com/android-synthesizer-1-app-architecture/) on Android synthesizer app architecture, this project follows a guided approach for its initial structure and design.
 
-### Features
-
--   **Customizable Wavetable Creation**  
-    Users can design sounds using foundational waveforms, each offering unique characteristics:
-    -   **Sine** – Offers a pure, single-frequency tone.
-    -   **Triangle** – Has a softer, rounded sound with odd harmonics.
-    -   **Square** – Delivers a bold, buzzy sound due to strong odd harmonics.
-    -   **Sawtooth** – Produces a rich, full sound because it contains all harmonics.
--   **Real-Time Sound Processing**
--   **Built-in Effects to Manipulate Audio**
--   **Clean UI with Jetpack Compose**
-
 ### Screenshots
 
-Below is a screenshot of the app in action:  
+Below is a screenshot of the app in action: 
+
 <img src="assets/screenshot.png" alt="Screenshot" width="300"/>
 
 ### Architecture
@@ -36,3 +25,16 @@ The Wavetable Synthesizer architecture combines **Model-View-Intent (MVI)** and 
 
 
 Here’s an illustration of the architecture: <img src="assets/architecture.png" alt="Architecture Diagram" />
+
+### Features
+
+-   **Customizable Wavetable Creation**  
+    Users can design sounds using foundational waveforms, each offering unique characteristics:
+    -   **Sine** – Offers a pure, single-frequency tone.
+    -   **Triangle** – Has a softer, rounded sound with odd harmonics.
+    -   **Square** – Delivers a bold, buzzy sound due to strong odd harmonics.
+    -   **Sawtooth** – Produces a rich, full sound because it contains all harmonics.
+-   **Real-Time Sound Processing**
+-   **Built-in Effects to Manipulate Audio**
+-   **Clean UI with Jetpack Compose**
+
