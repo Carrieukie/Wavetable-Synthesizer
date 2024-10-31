@@ -13,6 +13,9 @@ This app draws inspiration from [this tutorial](https://thewolfsound.com/android
 -   Built-in effects to manipulate audio
 -   Clean UI with Jetpack Compose
 
-**Screenshots**:
-![Screenshot](screenshot/screenshot.png)
+## Screenshots
+
+Here is a screenshot of the app:
+
+<img src="screenshot/screenshot.png" alt="Screenshot" width="300"/>
 **Architecture**:
