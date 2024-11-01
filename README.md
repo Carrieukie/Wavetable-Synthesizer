@@ -25,15 +25,32 @@ The Wavetable Synthesizer architecture combines **Model-View-Intent (MVI)** and 
 
 Here’s an illustration of the architecture: <img src="assets/architecture.png" alt="Architecture Diagram" />
 
-### Features
 
--   **Customizable Wavetable Creation**  
-    Users can design sounds using foundational waveforms, each offering unique characteristics:
-    -   **Sine** – Offers a pure, single-frequency tone.
-    -   **Triangle** – Has a softer, rounded sound with odd harmonics.
-    -   **Square** – Delivers a bold, buzzy sound due to strong odd harmonics.
-    -   **Sawtooth** – Produces a rich, full sound because it contains all harmonics.
--   **Real-Time Sound Processing**
--   **Built-in Effects to Manipulate Audio**
--   **Clean UI with Jetpack Compose**
+## Features
 
+### 1. **Extensive Waveform Library**
+
+-   Includes a variety of waveforms: sine, triangle, square, sawtooth, pulse, white noise, pink noise, and more, generated with efficient Fourier series and synthesis algorithms.
+-   Supports unique custom waveforms, including:
+    -   **Triangle-Sine Hybrid**: Combines the characteristics of triangle and sine waves.
+    -   **Harmonic Series**: Allows you to create tables based on selected harmonic overtones.
+    -   **Super Saw**: A dense saw wave created by layering multiple detuned voices.
+    -   **Bell Wave**: A modulated sine wave that produces bell-like sounds.
+
+### 2. **Real-Time Wavetable Customization and Swapping**
+
+-   Enables smooth real-time switching of wavetables with concurrency handling, so sound continuity is never compromised.
+
+### 3. **Frequency and Volume Controls**
+
+-   Adjust oscillator frequency with real-time recalculations for accurate pitch adjustments across all waveforms.
+-   Volume control for smooth amplitude modulation.
+
+### 4. **Playback and Interpolation**
+
+-   Linear interpolation between samples to reduce aliasing and create a more natural sound.
+-   Playback resets for consistent audio playback behavior.
+
+### 5. **Noise Generation Options**
+
+-   Features both white and pink noise for more creative possibilities, useful in percussive and ambient sound design.
