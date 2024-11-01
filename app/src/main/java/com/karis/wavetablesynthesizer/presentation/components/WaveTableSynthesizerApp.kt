@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -33,7 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.karis.wavetablesynthesizer.domain.WaveTable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,17 +60,68 @@ fun WaveTableSynthesizerApp(
             )
         },
         bottomBar = {
-            Button(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .height(58.dp)
-                    .fillMaxWidth(),
-                onClick = {
-                    onEvent(WaveTableSynthesizerAppEvents.PlayClicked)
-                },
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(text = if (waveTableSynthesizerState.value.isPlaying) "Stop" else "Play")
+            Column {
+                Row {
+                    // Frequency controls
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = "Frequency", style = MaterialTheme.typography.titleMedium)
+                        Text(text = "${waveTableSynthesizerState.value.frequency} Hz")
+                        Slider(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = waveTableSynthesizerState.value.frequency,
+                            onValueChange = {
+                                onEvent(WaveTableSynthesizerAppEvents.SetFrequencySliderPosition(it))
+                            },
+                            valueRange = MainActivityViewModel.frequencyRange
+                        )
+                    }
+
+                    // Amplitude controls
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = "Amplitude", style = MaterialTheme.typography.titleMedium)
+                        Text(text = "${waveTableSynthesizerState.value.amplitude} dB")
+                        Slider(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = waveTableSynthesizerState.value.amplitude,
+                            onValueChange = {
+                                onEvent(WaveTableSynthesizerAppEvents.SetVolume(it))
+                            },
+                            valueRange = MainActivityViewModel.amplitudeRange
+                        )
+                        Text(
+                            text = "(No difference in past 20 dB)",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
+
+
+                Button(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(58.dp)
+                        .fillMaxWidth(),
+                    onClick = {
+                        onEvent(WaveTableSynthesizerAppEvents.PlayClicked)
+                    },
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(text = if (waveTableSynthesizerState.value.isPlaying) "Stop" else "Play")
+                }
             }
         }
     ) { padding ->
@@ -80,114 +131,60 @@ fun WaveTableSynthesizerApp(
                 .fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-            ) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
+            Column {
+                Text(
+                    text = "Select a WaveTable",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    modifier = Modifier.padding(16.dp)
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier
+                        .fillMaxSize()
                         .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    contentPadding = PaddingValues(8.dp)
                 ) {
-                    // List of wavetables
-                    val waveTables = listOf(
-                        WaveTable.SINE,
-                        WaveTable.TRIANGLE,
-                        WaveTable.SQUARE,
-                        WaveTable.SAW
-                    )
+                    // WaveTable grid items
+                    items(waveTableSynthesizerState.value.wavetables) { waveTable ->
+                        val isSelected = waveTable == waveTableSynthesizerState.value.waveTable
 
-                    // Displaying buttons in a grid layout
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2), // Adjust the number of columns as needed
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(4.dp)
-                    ) {
-                        items(waveTables.size) { index ->
-                            val waveTable = waveTables[index]
-                            val isSelected = waveTable == waveTableSynthesizerState.value.waveTable
+                        // Define colors and font weight based on selection
+                        val containerColor = if (isSelected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.primaryContainer
+                        }
 
-                            // Define colors and font weight based on selection
-                            val containerColor = if (isSelected) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.primaryContainer
-                            }
+                        val fontWeight = if (isSelected) {
+                            FontWeight.SemiBold
+                        } else {
+                            MaterialTheme.typography.bodyMedium.fontWeight
+                        }
 
-                            val fontWeight = if (isSelected) {
-                                FontWeight.SemiBold
-                            } else {
-                                MaterialTheme.typography.bodyMedium.fontWeight
-                            }
-
-                            Card(
-                                modifier = Modifier
-                                    .padding(8.dp) // Padding around each card
-                                    .aspectRatio(1.6f)
-                                    .fillMaxWidth(0.45f), // Adjust width for two columns with padding
-                                onClick = { onEvent(WaveTableSynthesizerAppEvents.SetWavetable(waveTable)) },
-                                colors = CardDefaults.cardColors(containerColor = containerColor)
+                        Card(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .aspectRatio(1.8f)
+                                .fillMaxWidth(0.45f),
+                            onClick = { onEvent(WaveTableSynthesizerAppEvents.SetWavetable(waveTable)) },
+                            colors = CardDefaults.cardColors(containerColor = containerColor)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.Center // Center the text
-                                ) {
-                                    Text(
-                                        text = stringResource(id = waveTable.toResourceString()),
-                                        textAlign = TextAlign.Center, // Center text alignment
-                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = fontWeight)
-                                    )
-                                }
+                                Text(
+                                    text = stringResource(id = waveTable.toResourceString()),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = fontWeight)
+                                )
                             }
                         }
                     }
 
                 }
-
-
-                Column(
-                    Modifier
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "Frequency", style = MaterialTheme.typography.titleMedium)
-                    Text(text = "${waveTableSynthesizerState.value.frequency} Hz")
-                    Slider(
-                        modifier = Modifier,
-                        value = waveTableSynthesizerState.value.frequency,
-                        onValueChange = {
-                            onEvent(WaveTableSynthesizerAppEvents.SetFrequencySliderPosition(it))
-                        },
-                        valueRange = MainActivityViewModel.frequencyRange
-                    )
-                }
-
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "Amplitude", style = MaterialTheme.typography.titleMedium)
-                    Text(text = "${waveTableSynthesizerState.value.amplitude} Db")
-                    Slider(
-                        modifier = Modifier,
-                        value = waveTableSynthesizerState.value.amplitude,
-                        onValueChange = {
-                            onEvent(
-                                WaveTableSynthesizerAppEvents.SetVolume(it)
-                            )
-                        },
-                        valueRange = MainActivityViewModel.amplitudeRange
-                    )
-                    Text(text = "(No difference in past 20 Db)", style = MaterialTheme.typography.labelSmall)
-                }
-
             }
         }
     }

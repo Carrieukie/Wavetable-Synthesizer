@@ -9,4 +9,11 @@
     <string name="triangle">Triangle</string>
     <string name="square">Square</string>
     <string name="sawtooth">Sawtooth</string>
+    <string name="pulse">Pulse</string>
+    <string name="white_noise">White Noise</string>
+    <string name="pink_noise">Pink Noise</string>
+    <string name="triangle_sine_hybrid">Triangle Sine Hybrid</string>
+    <string name="harmonic_series">Harmonic Series</string>
+    <string name="super_saw">Super Saw</string>
+    <string name="bell">Bell</string>
 </resources>
